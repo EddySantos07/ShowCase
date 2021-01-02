@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DisplayProjects from './components/DisplayProjects/DisplayProjectContainer';
 
 class App extends React.Component {
 
@@ -9,7 +10,8 @@ class App extends React.Component {
 
 
                 <div> testing App Component </div>
-            
+                
+                <DisplayProjects/>
 
             </>
         );
