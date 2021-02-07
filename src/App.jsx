@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import DisplayProjects from './components/DisplayProjects/DisplayProjectContainer';
-
+import DisplayProjects from './components/DisplayProjects/DisplayProjectContainer.jsx';
 class App extends React.Component {
+
+    constructor() {
+        super()
+    }
 
     render() {
         return (
             <>
-                <div className="AppContainer"> </div>
 
-
-                <div> testing App Component </div>
+                <div> testing App Component</div>
                 
                 <DisplayProjects/>
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import GetProjects from './GetProjects';
 
-function DisplayProjectContainer () {
+function DisplayProjects() {
 
   return (
       <div className="ProjectHouseContainer"> hosues projects Container
@@ -12,4 +12,4 @@ function DisplayProjectContainer () {
     ); 
 }
 
-export default DisplayProjectContainer;
+export default DisplayProjects;
