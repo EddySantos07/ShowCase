@@ -9,7 +9,6 @@ require("dotenv").config();
 const PASSWORD = process.env.PASSWORD;
 const DB = process.env.DB;
 
-
 let gfs;
 
 mongoose.set("useUnifiedTopology", true); //-- check docs one syntax(self)
@@ -26,7 +25,7 @@ const db = mongoose.connection;
 // });
 
 // make sure the db instance is open before passing into `Grid`
-db.once('open',function (err) {
+db.once("open", function (err) {
   if (err) {
     console.log(err);
   }
@@ -35,7 +34,6 @@ db.once('open',function (err) {
   console.log("DB Connected!");
   // all set!
 });
-
 
 const getCollections = async () => {
   try {
@@ -57,22 +55,20 @@ const getCollections = async () => {
 };
 
 const sortThroughCollections = (collections) => {
-
-  let newCollection = collections.filter( (collection) => {
-
-    let files = 'files';
+  let newCollection = collections.filter((collection) => {
+    let files = "files";
     let collectionName = collection.name.slice(-5);
-    
-    if ( collectionName === files ) {
-      
+
+    if (collectionName === files) {
       return collection;
     }
-  })
+  });
 
   return newCollection;
-}
+};
 
 const findAllImages = async () => {
+  //returns documents from db
 
   try {
     let getCollectionsFunc = await getCollections();
@@ -83,12 +79,40 @@ const findAllImages = async () => {
 
     // console.log(sortedCollections);
     return sortedCollections;
-
   } catch (err) {
     console.log(err);
   }
-
 };
 
+const GetDocumentsFromCollection = async (collection) => {
+  let collectionName = collection.name;
 
+  let Get_Collection = await new Promise((resolve, reject) => {
+    db.db.collection(collectionName, async (err, collection) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(collection);
+    });
+  });
+
+  let Get_Documents = await new Promise((resolve, reject) => {
+    Get_Collection.find({}).toArray((err, data) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(data);
+    });
+  });
+
+  let New_Collection_With_Documents = JSON.parse(JSON.stringify(collection));
+
+  New_Collection_With_Documents["new_documents"] = Get_Documents;
+
+  return New_Collection_With_Documents;
+};
+
+module.exports.GetDocumentsFromCollection = GetDocumentsFromCollection;
 module.exports.findAllImages = findAllImages;
